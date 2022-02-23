@@ -11,22 +11,23 @@ namespace go_mafia_back.Models.Configuration.Initializers
     {
         public async Task Init(ApplicationContext context)
         {
+            if (context.PlayerRoles.Count() == 0) {
             PlayerRole[] roles = new PlayerRole[] {
-                new PlayerRole(){
-                    Role = "Civilian"
-                },
-                new PlayerRole(){
-                    Role = "Mafia"
-                },
-                new PlayerRole(){
-                    Role = "DonMafia"
-                },
-                new PlayerRole(){
-                    Role = "Sheriff"
-                }
-            };
-
-            await context.Set<PlayerRole>().AddRangeAsync(roles);
+                    new PlayerRole(){
+                        Role = "Civilian"
+                    },
+                    new PlayerRole(){
+                        Role = "Mafia"
+                    },
+                    new PlayerRole(){
+                        Role = "DonMafia"
+                    },
+                    new PlayerRole(){
+                        Role = "Sheriff"
+                    }
+                 };
+                await context.Set<PlayerRole>().AddRangeAsync(roles);
+            }
         }
     }
 }

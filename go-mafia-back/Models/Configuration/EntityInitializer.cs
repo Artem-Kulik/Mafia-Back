@@ -26,9 +26,6 @@ namespace go_mafia_back.Models.Configuration
             roleManager = _roleManager;
             context = _context;
 
-            //add concrete initializers
-            //order is IMPORTANT (for example, you first need to add categories and only then products that are category-dependent)
-
             this.AddConfig(new PlayerRoleInitializer());
         }
 
@@ -40,11 +37,12 @@ namespace go_mafia_back.Models.Configuration
         public async Task SeedData()
         {
             //always delete and recreate database with seeded data
-            bool deleted = await context.Database.EnsureDeletedAsync();
+            //bool deleted = await context.Database.EnsureDeletedAsync();
+
             bool created = await context.Database.EnsureCreatedAsync();
-            await InitializeIdetity();
-            //create test users and admins
-            //go through all the initializers and seed them all
+
+            InitializeIdetity();
+
             foreach (var initializer in typeInitializers)
             {
                 await initializer.Init(context);
@@ -52,21 +50,34 @@ namespace go_mafia_back.Models.Configuration
             }
         }
 
-        private async Task InitializeIdetity()
+        private void InitializeIdetity()
         {
-            //Create roles
-            await roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
-            await roleManager.CreateAsync(new IdentityRole { Name = "User" });
-            await roleManager.CreateAsync(new IdentityRole { Name = "Guest" });
-
-            await userManager.CreateAsync(new User
+            if (roleManager.FindByNameAsync("Guest").Result == null)
             {
-                UserName = "user@gmail.com",
-                Email = "user@gmail.com"                
-            }, "Qwerty1-");
-
-            var guest = await userManager.FindByEmailAsync("user@gmail.com");
-            await userManager.AddToRoleAsync(guest, "Guest");
+                var resultAdminRole = roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = "Admin"
+                }).Result;
+                var resultUserRole = roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = "User"
+                }).Result;
+                var resultGuestRole = roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = "Guest"
+                }).Result;
+            }
+            if (userManager.Users.Count() == 0)
+            {
+                string email = "user@gmail.com";
+                var guest = new User
+                {
+                    Email = email,
+                    UserName = email
+                };
+                var resultGuest = userManager.CreateAsync(guest, "Qwerty1-").Result;
+                resultGuest = userManager.AddToRoleAsync(guest, "Guest").Result;
+            }
         }
     }
 }

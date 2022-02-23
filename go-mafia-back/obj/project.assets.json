@@ -9109,20 +9109,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Arti_VVl\\.nuget\\packages\\": {}
+    "C:\\Users\\Артем\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Arti_VVl\\Desktop\\Mafia\\Mafia-Back\\go-mafia-back\\go-mafia-back.csproj",
+      "projectUniqueName": "D:\\The way\\Шаг дз\\GraduateWork\\Go_Mafia\\Mafia-Back-master\\go-mafia-back\\go-mafia-back.csproj",
       "projectName": "go-mafia-back",
-      "projectPath": "C:\\Users\\Arti_VVl\\Desktop\\Mafia\\Mafia-Back\\go-mafia-back\\go-mafia-back.csproj",
-      "packagesPath": "C:\\Users\\Arti_VVl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Arti_VVl\\Desktop\\Mafia\\Mafia-Back\\go-mafia-back\\obj\\",
+      "projectPath": "D:\\The way\\Шаг дз\\GraduateWork\\Go_Mafia\\Mafia-Back-master\\go-mafia-back\\go-mafia-back.csproj",
+      "packagesPath": "C:\\Users\\Артем\\.nuget\\packages\\",
+      "outputPath": "D:\\The way\\Шаг дз\\GraduateWork\\Go_Mafia\\Mafia-Back-master\\go-mafia-back\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Arti_VVl\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Артем\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -9133,7 +9138,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -9145,7 +9149,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
@@ -9208,7 +9211,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   },

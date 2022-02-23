@@ -10,8 +10,8 @@ using go_mafia_back.Models.Entities;
 namespace go_mafia_back.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220221161809_MyFirstMigration2")]
-    partial class MyFirstMigration2
+    [Migration("20220222184247_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

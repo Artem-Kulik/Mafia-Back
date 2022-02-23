@@ -21,14 +21,6 @@ namespace go_mafia_back.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IJwtTokenService _jwtTokenService;
 
-        /*
-         
- 
-  "ConnectionStrings": {
-    "DefaultConnections": 
-  },
-        
-         */
         public AccountController(
                 ApplicationContext context,
                 UserManager<User> userManager,
@@ -57,14 +49,24 @@ namespace go_mafia_back.Controllers
             {
                 return new ResultDto
                 {
-                    IsSuccessful = false
+                    IsSuccessful = false,
+                    Message = "Name is empty"
+                };
+            }
+            if (model.Password == null || model.Password == "")
+            {
+                return new ResultDto
+                {
+                    IsSuccessful = false,
+                    Message = "Password is empty"
                 };
             }
             if (model.Email == null || model.Email == "")
             {
                 return new ResultDto
                 {
-                    IsSuccessful = false
+                    IsSuccessful = false,
+                    Message = "Email is empty"
                 };
             }
             if (_userManager.Users.Any(x => x.Email == model.Email) == true)
@@ -72,7 +74,7 @@ namespace go_mafia_back.Controllers
                 return new ResultDto
                 {
                     IsSuccessful = false,
-                    Message = "Already registered"
+                    Message = '~' + model.Email + "~ already registered"
                 };
             }
             User user = new User()
@@ -81,7 +83,7 @@ namespace go_mafia_back.Controllers
                 UserName = model.Email,
                 PasswordHash = model.Password // my
             };
-            // await _userManager.CreateAsync(user, model.Password); right
+            //await _userManager.CreateAsync(user, model.Password);
 
             UserAdditionalInfo ui = new UserAdditionalInfo()
             {
@@ -92,8 +94,9 @@ namespace go_mafia_back.Controllers
             };
             try
             {
-                //await _userManager.AddToRoleAsync(user, "User");  // ???
                 _context.UserAdditionalInfo.Add(ui);
+                _context.SaveChanges();
+                await _userManager.AddToRoleAsync(user, "User");  // ???
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -120,7 +123,7 @@ namespace go_mafia_back.Controllers
             //    {
             //        IsSuccessful = false
             //    };
-            //}
+            //}            
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
@@ -142,7 +145,7 @@ namespace go_mafia_back.Controllers
                     return new ResultDto
                     {
                         IsSuccessful = false,
-                        Message = "Wrong password"
+                        Message ="Wrong password"
                     };
                 }
             }
@@ -150,7 +153,8 @@ namespace go_mafia_back.Controllers
             {
                 return new ResultDto
                 {
-                    IsSuccessful = false
+                    IsSuccessful = false,
+                    Message ="Wrong email"
                 };
             }
         }

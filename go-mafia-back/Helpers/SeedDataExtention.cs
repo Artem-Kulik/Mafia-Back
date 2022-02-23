@@ -1,6 +1,5 @@
 ﻿using go_mafia_back.Models.Configuration.Interfaces;
 using go_mafia_back.Models.Configuration;
-using go_mafia_back.Models.Configuration.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
