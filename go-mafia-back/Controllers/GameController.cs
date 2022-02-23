@@ -20,7 +20,7 @@ namespace go_mafia_back.Controllers
             _context = context;
         }
         [HttpGet]
-        public ResultDto getBreeds()
+        public ResultDto getRoles()
         {
             var roles = _context.PlayerRoles.Select(x => new PlayerRole
             {

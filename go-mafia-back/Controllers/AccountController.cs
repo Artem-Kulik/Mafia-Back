@@ -9,6 +9,9 @@ using go_mafia_back.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MailKit.Net.Smtp;
+using MimeKit;
+using Microsoft.AspNetCore.Hosting;
 
 namespace go_mafia_back.Controllers
 {
@@ -20,26 +23,36 @@ namespace go_mafia_back.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IJwtTokenService _jwtTokenService;
+        IHostingEnvironment env = null;
 
         public AccountController(
                 ApplicationContext context,
                 UserManager<User> userManager,
                 SignInManager<User> signInManager,
-                IJwtTokenService jwtTokenService)
+                IJwtTokenService jwtTokenService,
+                IHostingEnvironment env)
         {
             _userManager = userManager;
             _context = context;
             _signInManager = signInManager;
             _jwtTokenService = jwtTokenService;
+            this.env = env;
         }
+
         [HttpGet]
-        public ResultDto ok()
+        public ResultDto getUsers()
         {
-            return new ResultDto
+            var users = _context.Users.Select(x => new UserAdditionalInfo
+            {
+               Name = x.Email
+            }).ToList();
+
+            return new CollectionResultDto<UserAdditionalInfo>()
             {
                 IsSuccessful = true,
-                Message = "Seccess go)))"
+                Data = users
             };
+
         }
 
         [HttpPost("register")]
@@ -96,8 +109,36 @@ namespace go_mafia_back.Controllers
             {
                 _context.UserAdditionalInfo.Add(ui);
                 _context.SaveChanges();
-                await _userManager.AddToRoleAsync(user, "User");  // ???
+                await _userManager.AddToRoleAsync(user, "User");
                 _context.SaveChanges();
+
+                //MimeMessage message = new MimeMessage();
+
+                //MailboxAddress from = new MailboxAddress("Artem",
+                //"art.kulik2005@gmail.com");
+                //message.From.Add(from);
+
+                //MailboxAddress to = new MailboxAddress("User",
+                //"nasara.my.ten@gmail.com");
+                //message.To.Add(to);
+
+                //message.Subject = "GoMafia";
+
+                //BodyBuilder bodyBuilder = new BodyBuilder();
+                //bodyBuilder.HtmlBody = "<h1>My message</h1>";
+                //bodyBuilder.TextBody = "My message";
+
+                //message.Body = bodyBuilder.ToMessageBody();
+
+
+                //SmtpClient client = new SmtpClient();
+                //client.Connect("smtp_address_here", port_here, true);
+                //client.Authenticate("user_name_here", "pwd_here");
+
+
+                //client.Send(message);
+                //client.Disconnect(true);
+                //client.Dispose();
             }
             catch (Exception ex)
             {
